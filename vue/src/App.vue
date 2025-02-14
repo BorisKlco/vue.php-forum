@@ -3,15 +3,15 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header class="pt-12 px-8 md:w-[90%] xl:w-[80%] mx-auto">
-    <div class="w-full bg-gray-200 rounded-md overflow-hidden outline outline-gray-400 shadow-sm">
+  <header class="pt-12 px-4 max-w-[95%] xl:max-w-[1440px] mx-auto">
+    <div class="w-full bg-gray-200 rounded-md overflow-hidden outline outline-gray-400 shadow-sm text-sm sm:text-lg">
       <img src="@/assets/nav.jpg" class="object-cover hidden sm:block outline outline-gray-400">
-      <div class="h-8 px-4 text-sm md:h-10 flex items-center justify-between">
-        <div class="flex items-center gap-1 cursor-pointer">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+      <div class="h-8 px-4 md:h-10 flex items-center justify-between">
+        <div class="flex items-center gap-1 cursor-pointer hover:text-sky-600">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z" clip-rule="evenodd" />
           </svg>
-          <p>Username234</p>
+          OneTwo
         </div>
 
         <div class="flex items-center gap-4">
@@ -25,7 +25,6 @@ import { RouterView } from 'vue-router'
 </svg>
 FAQ
           </span>
-          <p>Link</p>
         </div>
       </div>
     </div>
