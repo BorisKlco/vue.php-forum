@@ -13,7 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="outline outline-gray-400 rounded-md bg-gray-200 shadow-sm">
+  <div class="outline outline-gray-400 rounded-md bg-gray-200">
     <div v-if="quote" class="py-2 px-2 flex items-center justify-center">
       <p>
         "{{ quote.quote }}" - <span>{{ quote.author }}</span>
