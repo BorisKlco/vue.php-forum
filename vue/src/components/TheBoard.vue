@@ -1,18 +1,23 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div class="mt-6 outline outline-gray-400 rounded-md">
-    <div class="py-2 px-2 bg-gray-200 border-b-[1px] border-gray-400">
-      <h1 class="text-xl">Board Category</h1>
-    </div>
-    <div class="flex justify-between h-8 items-center px-2">
-      <p>Forum</p>
-      <div class="flex">
-        <p class="px-6 border-x border-gray-400">Forum</p>
-        <p class="px-6">Forum</p>
-        <p class="px-6 border-l border-gray-400">Forum</p>
-      </div>
-    </div>
+    <table class="border-collapse table-auto w-full" cellspacing="0">
+      <thead>
+        <tr class="bg-gray-300 text-xs text-gray-700">
+          <th class="w-[70%] sm:w-[70%] py-1 px-4 border-b border-r border-gray-400 text-center">
+            Forum
+          </th>
+          <th class="w-[5%] py-1 px-4 border-b border-r border-gray-400 hidden sm:table-cell">
+            Topics
+          </th>
+          <th class="w-[5%] py-1 px-4 border-b border-r border-gray-400 hidden sm:table-cell">
+            Posts
+          </th>
+          <th class="sm:w-[15%] py-1 px-2 border-b border-gray-400">Last post</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 </template>
