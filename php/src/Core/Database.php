@@ -34,9 +34,14 @@ class Database
 
     public static function q(string $q, array $params = []): PDOStatement
     {
-        $db = self::$db;
-        $statement = $db->prepare($q);
-        $statement->execute($params);
+
+        try {
+            $db = self::$db;
+            $statement = $db->prepare($q);
+            $statement->execute($params);
+        } catch (PDOException $e) {
+            exit('Query execution error...');
+        }
 
         return $statement;
     }
