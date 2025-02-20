@@ -8,7 +8,7 @@ defineProps({
 </script>
 <template>
   <tr class="text-sm h-8" :class="{ 'border-b border-gray-400': !last }">
-    <th class="border-r border-gray-400 text-left px-2 py-1">
+    <th class="border-r border-gray-400 text-left px-2 py-2">
       <div class="flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ defineProps({
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6 mr-4"
+          class="size-8 mr-4"
         >
           <path
             v-if="visited"

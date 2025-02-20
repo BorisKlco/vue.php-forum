@@ -24,12 +24,11 @@ onMounted(async() => {
   </div>
   <div v-if="board" class="outline outline-gray-400 overflow-hidden rounded-md">
     <table class="border-collapse table-auto w-full">
-      <template v-for="(category, categoryIndex) in board.categories" :key="category.name">
+      <template v-for="category in board" :key="category.name">
         <BoardHead :category="category.name" />
         <tbody>
-          <template v-for="(forum, forumIndex) in category.forums" :key="forum.name">
-            <BoardForum :name="forum.name" :desription="forum.description" 
-            :last="categoryIndex === board.categories.length - 1 && forumIndex === category.forums.length - 1" />
+          <template v-for="forum in category.forums" :key="forum.name">
+            <BoardForum :name="forum.name" :desription="forum.description" :last="forum.lastEntry" />
           </template>
         </tbody>
       </template>
