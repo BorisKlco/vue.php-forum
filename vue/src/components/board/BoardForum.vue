@@ -2,12 +2,13 @@
 defineProps({
   name: String,
   desription: String,
+  link: String,
   last: Boolean,
   visited: Boolean,
 })
 </script>
 <template>
-  <tr class="text-sm h-8" :class="{ 'border-b border-gray-400': !last }">
+  <tr class="text-sm h-8 hover:bg-gray-200" :class="{ 'border-b border-gray-400': !last }">
     <th class="border-r border-gray-400 text-left px-2 py-2">
       <div class="flex items-center">
         <svg
@@ -32,10 +33,12 @@ defineProps({
             d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
           />
         </svg>
-        <div class="flex flex-col">
-          <span class="">{{ name }}</span>
-          <span class="text-xs">{{ desription }}</span>
-        </div>
+        <RouterLink :to="link">
+          <div class="flex flex-col">
+            <span class="">{{ name }}</span>
+            <span class="text-xs">{{ desription }}</span>
+          </div>
+        </RouterLink>
       </div>
     </th>
     <th class="border-r border-gray-400 hidden sm:table-cell">16</th>

@@ -2,33 +2,35 @@
 import { onMounted, ref } from 'vue'
 import BoardForum from './board/BoardForum.vue'
 import BoardHead from './board/BoardHead.vue'
+import BoardNavigation from './board/BoardNavigation.vue'
 
+let api = import.meta.env.VITE_API
 let board = ref()
 
-onMounted(async() => {
+onMounted(async () => {
   try {
-    const res = await fetch("http://138.2.144.113:8000/");
-    board.value = await res.json();
+    const res = await fetch(api)
+    board.value = await res.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 })
-
 </script>
 
 <template>
-  <div class="pt-4 px-2 pb-1 flex gap-1 text-xs">
-    <a href="#">Index</a>
-    <span>/</span>
-    <a href="#">Forum</a>
-  </div>
+  <BoardNavigation v-if="board" :path="board.navigation.path" :name="board.navigation.name" />
   <div v-if="board" class="outline outline-gray-400 overflow-hidden rounded-md">
     <table class="border-collapse table-auto w-full">
-      <template v-for="category in board" :key="category.name">
+      <template v-for="category in board.categories" :key="category.name">
         <BoardHead :category="category.name" />
         <tbody>
           <template v-for="forum in category.forums" :key="forum.name">
-            <BoardForum :name="forum.name" :desription="forum.description" :last="forum.lastEntry" />
+            <BoardForum
+              :name="forum.name"
+              :desription="forum.description"
+              :link="forum.link"
+              :last="forum.lastEntry"
+            />
           </template>
         </tbody>
       </template>

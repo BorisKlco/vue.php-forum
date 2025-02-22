@@ -1,6 +1,7 @@
 <?php
 
 use App\Api\Board;
+use App\Api\Quote;
 use App\Core\Database;
 use App\Core\Router;
 
@@ -14,6 +15,7 @@ $router = new Router();
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
-$router->register('GET', '/', [Board::class, 'index']);
+$router->register('GET', '/api', [Board::class, 'index']);
+$router->register('GET', '/api/quote', [Quote::class, 'random']);
 
 $router->resolve($method, $uri);

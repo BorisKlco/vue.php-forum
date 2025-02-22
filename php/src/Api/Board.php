@@ -17,20 +17,20 @@ class Board
             ";
 
         $rows = Database::q($q)->fetchAll();
-        $data = [];
+        $data = ['navigation' => ['name' => 'Index', 'path' => '/'], 'categories' => []];
 
         foreach ($rows as $index => $row) {
             $category = $row['category'];
             $category_id = $row['id'];
 
-            if (!isset($data[$category_id])) {
-                $data[$category_id] = [
+            if (!isset($data['categories'][$category_id])) {
+                $data['categories'][$category_id] = [
                     'name' => $category,
                     'forums' => []
                 ];
             }
 
-            $data[$category_id]['forums'][] = [
+            $data['categories'][$category_id]['forums'][] = [
                 'name' => $row['name'],
                 'description' => $row['description'],
                 'link' => $row['link'],
