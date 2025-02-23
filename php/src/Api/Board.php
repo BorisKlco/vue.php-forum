@@ -49,27 +49,44 @@ class Board
             Response::error();
         }
 
-        $sql = "select forum.id as forum_id, forum.name from forum where forum.id = ?;";
-        $forum = Database::q($sql, [$forum_id])->fetchAll();
+        $sql = "SELECT 
+                    forum.id AS forum_id, 
+                    forum.name AS forum_name, 
+                    post.id AS post_id, 
+                    post.name AS post_title, 
+                    post.createdAt,
+                    user.name AS author_name
+                FROM post 
+                JOIN forum ON forum.id = post.forum_id 
+                JOIN user ON post.author = user.id 
+                WHERE forum.id = ?;";
 
-        if ($forum) {
-            $forum = $forum[0];
+        $fetch = Database::q($sql, [$forum_id])->fetchAll();
+
+        if ($fetch) {
+            $forum = $fetch[0];
         } else {
             Response::error();
         }
-        // echo '<pre>';
-        // var_dump($forum);
-        // exit();
 
         $data = [
             'navigation' => [
                 ['name' => 'Index', 'path' => '/'],
-                ['name' => $forum['name'], 'path' => "{$this->formatName(($forum['name']))}-f{$forum['forum_id']}"]
+                ['name' => $forum['forum_name'], 'path' => "{$this->formatName(($forum['forum_name']))}-f{$forum['forum_id']}"]
             ],
-            'forum' => [
-                'name' => $forum['name']
-            ]
+            'post' => []
         ];
+
+        foreach ($fetch as $index => $post) {
+            $data['post'][] = [
+                'post_id' => $post['post_id'],
+                'title' => $post['post_title'],
+                'authod' => $post['author_name'],
+                'createdAt' => $post['createdAt'],
+                'path' => "{$this->formatName(($post['post_title']))}-t{$post['post_id']}",
+                'lastEntry' => $index == count($fetch) - 1
+            ];
+        }
 
         Response::json($data);
     }
