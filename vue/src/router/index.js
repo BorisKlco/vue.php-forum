@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ForumView from '@/views/ForumView.vue'
+import TopicView from '@/views/TopicView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +10,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/:name-f:fid',
+      name: 'forum',
+      component: ForumView
+    },
+    {
+      path: '/:name-t:tid',
+      name: 'topic',
+      component: TopicView
     },
     // {
     //   path: '/about',

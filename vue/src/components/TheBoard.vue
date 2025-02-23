@@ -18,7 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <BoardNavigation v-if="board" :path="board.navigation.path" :name="board.navigation.name" />
+  <BoardNavigation v-if="board" :forum="board.navigation" />
   <div v-if="board" class="outline outline-gray-400 overflow-hidden rounded-md">
     <table class="border-collapse table-auto w-full">
       <template v-for="category in board.categories" :key="category.name">
