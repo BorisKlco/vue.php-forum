@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BoardNavigation from '@/components/board/BoardNavigation.vue'
 import ForumHead from '@/components/forum/ForumHead.vue'
@@ -23,7 +23,6 @@ const fetchForum = async () => {
     if (forum.value.error) {
       router.push('/')
     }
-    console.log(forum.value)
   } catch (e) {
     console.log(e)
     router.push('/')
@@ -31,6 +30,8 @@ const fetchForum = async () => {
 }
 
 onMounted(fetchForum)
+
+watch(() => router.currentRoute.value.query.page, fetchForum)
 </script>
 
 <template>
@@ -49,7 +50,7 @@ onMounted(fetchForum)
           />
         </tbody>
       </table>
-      <Pagination :page="forum.page" />
+      <Pagination v-show="forum.page.max > 1" :page="forum.page" />
     </div>
     <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
   </main>

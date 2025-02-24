@@ -24,13 +24,8 @@ onMounted(async () => {
       <template v-for="category in board.categories" :key="category.name">
         <BoardHead :category="category.name" />
         <tbody>
-          <template v-for="forum in category.forums" :key="forum.name">
-            <BoardForum
-              :name="forum.name"
-              :desription="forum.description"
-              :link="forum.link"
-              :last="forum.lastEntry"
-            />
+          <template v-for="forum in category.forums" :key="forum.id">
+            <BoardForum :forum="forum" />
           </template>
         </tbody>
       </template>

@@ -10,9 +10,12 @@ class Board
     public function index()
     {
         $q = "
-            SELECT forum.id as forum_id, forum.name, forum.description, forum.link, category.name as category , category.id as id
+            SELECT forum.id as forum_id, forum.name, forum.description, category.name as category , category.id as id, COUNT(post.id) as posts, COUNT(comment.id) as replies
             FROM forum 
             JOIN category ON forum.category_id = category.id 
+            LEFT JOIN post ON forum.id = post.forum_id 
+            LEFT JOIN comment ON forum.id = comment.forum_id
+            GROUP BY forum.id, category.id
             ORDER BY category.id, forum.id;
             ";
 
@@ -31,8 +34,11 @@ class Board
             }
 
             $data['categories'][$category_id]['forums'][] = [
+                'id' => $row['forum_id'],
                 'name' => $row['name'],
                 'description' => $row['description'],
+                'posts' => $row['posts'],
+                'replies' => $row['replies'],
                 'link' => "{$this->formatName(($row['name']))}-f{$row['forum_id']}",
                 'lastEntry' => $index == count($rows) - 1
             ];
@@ -58,7 +64,7 @@ class Board
             [$forum_id]
         )->fetch()['total'] ?? Response::error();
 
-        $perPage = 5;
+        $perPage = 10;
         $totalPages = (int)ceil($postCount / $perPage);
         $page = max(1, min($page, $totalPages));
         $offset = ($page - 1) * $perPage;
