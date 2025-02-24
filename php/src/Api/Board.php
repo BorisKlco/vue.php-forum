@@ -44,10 +44,24 @@ class Board
     public function forum()
     {
         $forum_id = $_GET['id'] ?? false;
+        $page = (int)$_GET['page'] ?? 1;
 
-        if (filter_var($forum_id, FILTER_VALIDATE_INT) != true) {
+        if (
+            filter_var($forum_id, FILTER_VALIDATE_INT) != true
+            || filter_var($page, FILTER_VALIDATE_INT) != true
+        ) {
             Response::error();
         }
+
+        $postCount = Database::q(
+            "SELECT COUNT(*) as total FROM post WHERE forum_id = ?",
+            [$forum_id]
+        )->fetch()['total'] ?? Response::error();
+
+        $perPage = 5;
+        $totalPages = (int)ceil($postCount / $perPage);
+        $page = max(1, min($page, $totalPages));
+        $offset = ($page - 1) * $perPage;
 
         $sql = "SELECT 
                     forum.id AS forum_id, 
@@ -59,9 +73,14 @@ class Board
                 FROM post 
                 JOIN forum ON forum.id = post.forum_id 
                 JOIN user ON post.author = user.id 
-                WHERE forum.id = ?;";
+                WHERE forum.id = ?
+                LIMIT $perPage OFFSET $offset;";
 
         $fetch = Database::q($sql, [$forum_id])->fetchAll();
+
+        // echo '<pre>';
+        // var_dump($postCount, $totalPages, $page);
+        // exit();
 
         if ($fetch) {
             $forum = $fetch[0];
@@ -73,6 +92,10 @@ class Board
             'navigation' => [
                 ['name' => 'Index', 'path' => '/'],
                 ['name' => $forum['forum_name'], 'path' => "{$this->formatName(($forum['forum_name']))}-f{$forum['forum_id']}"]
+            ],
+            'page' => [
+                'current' => $page,
+                'max' => $totalPages
             ],
             'post' => []
         ];

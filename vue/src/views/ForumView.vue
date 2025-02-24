@@ -4,15 +4,21 @@ import { useRoute, useRouter } from 'vue-router'
 import BoardNavigation from '@/components/board/BoardNavigation.vue'
 import ForumHead from '@/components/forum/ForumHead.vue'
 import ForumTopic from '@/components/forum/ForumTopic.vue'
+import Pagination from '@/components/PaginationView.vue'
 
 const route = useRoute()
 const router = useRouter()
 let api = import.meta.env.VITE_API
 let forum = ref()
+let page = ref()
 
-onMounted(async () => {
+const fetchForum = async () => {
   try {
-    const res = await fetch(api + '/forum?id=' + route.params.fid)
+    page.value = route.query.page ?? 1
+    const params = new URLSearchParams({ id: route.params.fid, page: page.value })
+    const url = `${api}/forum?${params.toString()}`
+
+    const res = await fetch(url)
     forum.value = await res.json()
     if (forum.value.error) {
       router.push('/')
@@ -22,7 +28,9 @@ onMounted(async () => {
     console.log(e)
     router.push('/')
   }
-})
+}
+
+onMounted(fetchForum)
 </script>
 
 <template>
@@ -41,6 +49,7 @@ onMounted(async () => {
           />
         </tbody>
       </table>
+      <Pagination :page="forum.page" />
     </div>
     <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
   </main>
