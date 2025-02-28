@@ -121,6 +121,15 @@ class Board
     }
 
 
+    public function topic()
+    {
+        $topic_id = $_GET['id'] ?? false;
+        $data = ["status" => $topic_id];
+
+        Response::json($data);
+    }
+
+
     private function formatName($name)
     {
         $name = strtolower($name);

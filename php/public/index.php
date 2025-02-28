@@ -18,5 +18,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 $router->register('GET', '/api', [Board::class, 'index']);
 $router->register('GET', '/api/quote', [Quote::class, 'random']);
 $router->register('GET', '/api/forum', [Board::class, 'forum']);
+$router->register('GET', '/api/topic', [Board::class, 'topic']);
 
 $router->resolve($method, $uri);
