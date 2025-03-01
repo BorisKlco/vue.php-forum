@@ -4,7 +4,7 @@ import ForumTopic from '@/components/forum/ForumTopic.vue'
 
 const placeholder = {
   title: 'Lorem, ipsum',
-  author: 'PlaceholdeUser',
+  author: 'Anon342',
   path: '#',
   replies: '6',
   views: '34',

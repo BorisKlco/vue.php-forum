@@ -133,6 +133,8 @@ class Board
 
     public function topic()
     {
+
+        Response::json($_SERVER);
         $topic_id = $_GET['id'] ?? false;
         $page = $_GET['page'] ?? 1;
 

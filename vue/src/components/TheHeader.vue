@@ -1,5 +1,5 @@
 <script setup>
-import { UserPen, GitPullRequest, ExternalLink } from 'lucide-vue-next'
+import { User, GitPullRequest, ExternalLink } from 'lucide-vue-next'
 </script>
 
 <template>
@@ -12,7 +12,7 @@ import { UserPen, GitPullRequest, ExternalLink } from 'lucide-vue-next'
       </RouterLink>
       <div class="px-4 flex items-center justify-between">
         <div class="flex items-center gap-1 cursor-pointer hover:text-blue-800 text-sm">
-          <UserPen size="16" />
+          <User size="16" />
           OneTwo
         </div>
 
