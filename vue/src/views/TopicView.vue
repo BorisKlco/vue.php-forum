@@ -3,6 +3,8 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BoardNavigation from '@/components/board/BoardNavigation.vue'
 import PostReply from '@/components/post/PostReply.vue'
+import PostPlaceholder from '@/components/placeholder/PostPlaceholder.vue'
+import Pagination from '@/components/PaginationView.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -34,15 +36,11 @@ watch(() => router.currentRoute.value.query.page, fetchTopic)
 
 <template>
   <BoardNavigation v-if="topic" :forum="topic.navigation" />
-  <div class="outline outline-gray-400 overflow-hidden rounded-md">
-    <PostReply />
-    <PostReply />
-    <PostReply />
-    <PostReply />
-    <PostReply />
-    <PostReply />
-    <PostReply />
-    <PostReply />
-    <PostReply />
+  <div v-if="topic" class="outline outline-gray-400 overflow-hidden rounded-md">
+    <PostReply v-for="comment in topic.comments" :key="comment.comment_id" :comment="comment" />
+    <Pagination v-show="topic.page.max > 1" :page="topic.page" />
+  </div>
+  <div v-else class="outline outline-gray-400 overflow-hidden rounded-md mt-8">
+    <PostPlaceholder />
   </div>
 </template>

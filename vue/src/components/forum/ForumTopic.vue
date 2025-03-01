@@ -13,7 +13,7 @@ defineProps({
   >
     <th class="border-r border-gray-400 text-left px-2 py-2">
       <div class="flex items-center">
-        <MailIcon :open="topic.lastEntry" />
+        <MailIcon />
         <RouterLink :to="topic.path">
           <div class="flex flex-col">
             <span class="text-gray-900">{{ topic.title }}</span>

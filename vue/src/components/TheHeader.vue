@@ -13,7 +13,7 @@ import { User, GitPullRequest, ExternalLink } from 'lucide-vue-next'
       <div class="px-4 flex items-center justify-between">
         <div class="flex items-center gap-1 cursor-pointer hover:text-blue-800 text-sm">
           <User size="16" />
-          OneTwo
+          Anon342
         </div>
 
         <div class="flex items-center justify-center py-2 gap-3 text-sm">

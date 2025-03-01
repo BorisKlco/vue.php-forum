@@ -1,10 +1,6 @@
 <script setup>
-import { Mail, MailOpen } from 'lucide-vue-next'
-defineProps({
-  open: Boolean,
-})
+import { Mail } from 'lucide-vue-next'
 </script>
 <template>
-  <MailOpen v-if="open" size="32" stroke-width="1.25" class="mr-4 min-w-6" />
-  <Mail v-else size="32" stroke-width="1.25" class="mr-4 min-w-6" />
+  <Mail size="32" stroke-width="1.25" class="mr-4 min-w-6" />
 </template>

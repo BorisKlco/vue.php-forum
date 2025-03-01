@@ -46,7 +46,7 @@ class Board
                 'description' => $row['description'],
                 'posts' => $row['posts'],
                 'replies' => $row['replies'],
-                'link' => "{$this->formatName(($row['name']))}-f{$row['forum_id']}",
+                'link' => "{$this->formatName(($row['name']))}-forum{$row['forum_id']}",
                 'lastEntry' => $index == count($rows) - 1
             ];
         }
@@ -70,7 +70,7 @@ class Board
             [$forum_id]
         )->fetch()['total'] ?? Response::error();
 
-        $perPage = 10;
+        $perPage = 4;
         $totalPages = (int)ceil($postCount / $perPage);
         $page = max(1, min($page, $totalPages));
         $offset = ($page - 1) * $perPage;
@@ -106,7 +106,7 @@ class Board
         $data = [
             'navigation' => [
                 ['name' => 'Index', 'path' => '/'],
-                ['name' => $forum['forum_name'], 'path' => "{$this->formatName(($forum['forum_name']))}-f{$forum['forum_id']}"]
+                ['name' => $forum['forum_name'], 'path' => "{$this->formatName(($forum['forum_name']))}-forum{$forum['forum_id']}"]
             ],
             'page' => [
                 'current' => $page,
@@ -122,7 +122,7 @@ class Board
                 'author' => $post['author_name'],
                 'replies' => $post['replies'],
                 'createdAt' => $post['createdAt'],
-                'path' => "{$this->formatName(($post['post_title']))}-t{$post['post_id']}",
+                'path' => "{$this->formatName(($post['post_title']))}-topic{$post['post_id']}",
                 'lastEntry' => $index == count($fetch) - 1
             ];
         }
@@ -134,15 +134,75 @@ class Board
     public function topic()
     {
 
-        Response::json($_SERVER);
-        $topic_id = $_GET['id'] ?? false;
+        $post_id = $_GET['id'] ?? false;
         $page = $_GET['page'] ?? 1;
 
         if (
-            filter_var($topic_id, FILTER_VALIDATE_INT) != true
+            filter_var($post_id, FILTER_VALIDATE_INT) != true
         ) {
             Response::error();
         }
+
+        $postCount = Database::q(
+            "SELECT COUNT(*) as total FROM comment WHERE comment.post_id = ?",
+            [$post_id]
+        )->fetch()['total'] ?? Response::error();
+
+
+        $nav_sql = "SELECT 
+                            post.name as post_name, 
+                            post.id as post_id, 
+                            forum.name as forum_name, 
+                            forum.id as forum_id
+                        FROM comment 
+                        JOIN post ON post.id = comment.post_id
+                        JOIN forum ON comment.forum_id = forum.id
+                        WHERE comment.post_id = ?;";
+
+        $navigation = Database::q($nav_sql, [$post_id])->fetch();
+
+        $perPage = 3;
+        $totalPages = (int)ceil($postCount / $perPage);
+        $page = max(1, min($page, $totalPages));
+        $offset = ($page - 1) * $perPage;
+
+        $sql = "SELECT 
+                    comment.id as comment_id, 
+                    comment.comment as reply, 
+                    comment.createdAt as createdAt,
+                    user.name as user 
+                FROM comment 
+                JOIN post ON post.id = comment.post_id
+                JOIN user ON comment.user_id = user.id
+                WHERE comment.post_id = ?
+                LIMIT $perPage OFFSET $offset;";
+
+        $fetch = Database::q($sql, [$post_id])->fetchAll();
+
+        $data = [
+            'navigation' => [
+                ['name' => 'Index', 'path' => '/'],
+                ['name' => $navigation['forum_name'], 'path' => "{$this->formatName(($navigation['forum_name']))}-forum{$navigation['forum_id']}"],
+                ['name' => $navigation['post_name'], 'path' => "{$this->formatName(($navigation['post_name']))}-topic{$navigation['post_id']}"]
+            ],
+            'page' => [
+                'current' => $page,
+                'max' => $totalPages
+            ],
+            'comments' => []
+        ];
+
+        foreach ($fetch as $index => $comment) {
+            $data['comments'][] = [
+                'comment_id' => $comment['comment_id'],
+                'reply' => $comment['reply'],
+                'author' => $comment['user'],
+                'createdAt' => $comment['createdAt'],
+                'lastEntry' => $index == count($fetch) - 1
+            ];
+        }
+
+        Response::json($data);
     }
 
 

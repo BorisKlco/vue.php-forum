@@ -44,7 +44,7 @@ defineProps({
     <div class="flex w-0 flex-1 justify-end group">
       <RouterLink
         v-if="page.current < page.max"
-        :to="`?page=${page.current + 1}`"
+        :to="`?page=${Number(page.current) + 1}`"
         class="inline-flex items-center pl-1 pt-2 sm:pr-2 text-sm font-medium hover:border-gray-300 group-hover:text-gray-800"
       >
         Next

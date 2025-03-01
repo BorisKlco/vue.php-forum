@@ -16,7 +16,7 @@ const placeholder = {
   <table class="border-collapse table-auto w-full">
     <ForumHead />
     <tbody>
-      <template v-for="i in 6" :key="i">
+      <template v-for="i in 2" :key="i">
         <ForumTopic :topic="placeholder" />
       </template>
     </tbody>
