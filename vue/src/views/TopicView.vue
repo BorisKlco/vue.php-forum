@@ -28,11 +28,9 @@ onMounted(fetchTopic)
 </script>
 
 <template>
-  <main class="py-4 px-4 max-w-[95%] xl:max-w-[1440px] mx-auto">
-    <BoardNavigation v-if="topic" :forum="topic.navigation" />
-    <div v-if="topic" class="outline outline-gray-400 overflow-hidden rounded-md">
-      {{ topic }}
-    </div>
-    <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
-  </main>
+  <BoardNavigation v-if="topic" :forum="topic.navigation" />
+  <div v-if="topic" class="outline outline-gray-400 overflow-hidden rounded-md">
+    {{ topic }}
+  </div>
+  <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
 </template>

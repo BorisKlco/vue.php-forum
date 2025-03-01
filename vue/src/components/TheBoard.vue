@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue'
 import BoardForum from './board/BoardForum.vue'
 import BoardHead from './board/BoardHead.vue'
-import BoardNavigation from './board/BoardNavigation.vue'
 import BoardPlaceholder from './board/BoardPlaceholder.vue'
 
 let api = import.meta.env.VITE_API
@@ -19,7 +18,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <BoardNavigation :forum="board ? board.navigation : false" />
   <div v-if="board" class="outline outline-gray-400 overflow-hidden rounded-md">
     <table class="border-collapse table-auto w-full">
       <template v-for="category in board.categories" :key="category.name">

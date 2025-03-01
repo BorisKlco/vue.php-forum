@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="outline outline-gray-400 rounded-md bg-gray-200">
+  <div class="outline outline-gray-400 rounded-md bg-gray-200 -mt-2 mb-2">
     <div class="py-2 px-2 flex items-center justify-center">
       <p v-if="quote">"{{ quote.quote }}"</p>
       <p v-else>"Lorem, ipsum dolor sit amet consectetur"</p>

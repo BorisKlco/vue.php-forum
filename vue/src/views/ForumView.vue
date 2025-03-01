@@ -35,19 +35,17 @@ watch(() => router.currentRoute.value.query.page, fetchForum)
 </script>
 
 <template>
-  <main class="py-4 px-4 max-w-[95%] xl:max-w-[1440px] mx-auto">
-    <BoardNavigation v-if="forum" :forum="forum.navigation" />
-    <div v-if="forum" class="outline outline-gray-400 overflow-hidden rounded-md">
-      <table class="border-collapse table-auto w-full">
-        <ForumHead />
-        <tbody>
-          <template v-for="topic in forum.post" :key="topic.post_id">
-            <ForumTopic :topic="topic" />
-          </template>
-        </tbody>
-      </table>
-      <Pagination v-show="forum.page.max > 1" :page="forum.page" />
-    </div>
-    <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
-  </main>
+  <BoardNavigation v-if="forum" :forum="forum.navigation" />
+  <div v-if="forum" class="outline outline-gray-400 overflow-hidden rounded-md">
+    <table class="border-collapse table-auto w-full">
+      <ForumHead />
+      <tbody>
+        <template v-for="topic in forum.post" :key="topic.post_id">
+          <ForumTopic :topic="topic" />
+        </template>
+      </tbody>
+    </table>
+    <Pagination v-show="forum.page.max > 1" :page="forum.page" />
+  </div>
+  <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
 </template>
