@@ -10,11 +10,18 @@ class Board
     public function index()
     {
         $q = "
-            SELECT forum.id as forum_id, forum.name, forum.description, category.name as category , category.id as id, COUNT(post.id) as posts, COUNT(comment.id) as replies
+            SELECT 
+                forum.id as forum_id, 
+                forum.name, 
+                forum.description, 
+                category.name as category, 
+                category.id as category_id, 
+                COUNT(DISTINCT post.id) as posts, 
+                COUNT(comment.id) as replies
             FROM forum 
             JOIN category ON forum.category_id = category.id 
             LEFT JOIN post ON forum.id = post.forum_id 
-            LEFT JOIN comment ON forum.id = comment.forum_id
+            LEFT JOIN comment ON post.id = comment.post_id
             GROUP BY forum.id, category.id
             ORDER BY category.id, forum.id;
             ";
@@ -24,7 +31,7 @@ class Board
 
         foreach ($rows as $index => $row) {
             $category = $row['category'];
-            $category_id = $row['id'];
+            $category_id = $row['category_id'];
 
             if (!isset($data['categories'][$category_id])) {
                 $data['categories'][$category_id] = [
@@ -50,11 +57,10 @@ class Board
     public function forum()
     {
         $forum_id = $_GET['id'] ?? false;
-        $page = (int)$_GET['page'] ?? 1;
+        $page = $_GET['page'] ?? 1;
 
         if (
             filter_var($forum_id, FILTER_VALIDATE_INT) != true
-            || filter_var($page, FILTER_VALIDATE_INT) != true
         ) {
             Response::error();
         }
@@ -75,11 +81,14 @@ class Board
                     post.id AS post_id, 
                     post.name AS post_title, 
                     post.createdAt,
-                    user.name AS author_name
+                    user.name AS author_name,
+                    COUNT(comment.id) as replies
                 FROM post 
                 JOIN forum ON forum.id = post.forum_id 
                 JOIN user ON post.author = user.id 
+                LEFT JOIN comment ON comment.post_id = post.id
                 WHERE forum.id = ?
+                GROUP BY post.id
                 LIMIT $perPage OFFSET $offset;";
 
         $fetch = Database::q($sql, [$forum_id])->fetchAll();
@@ -111,6 +120,7 @@ class Board
                 'post_id' => $post['post_id'],
                 'title' => $post['post_title'],
                 'authod' => $post['author_name'],
+                'replies' => $post['replies'],
                 'createdAt' => $post['createdAt'],
                 'path' => "{$this->formatName(($post['post_title']))}-t{$post['post_id']}",
                 'lastEntry' => $index == count($fetch) - 1
@@ -124,9 +134,13 @@ class Board
     public function topic()
     {
         $topic_id = $_GET['id'] ?? false;
-        $data = ["status" => $topic_id];
+        $page = $_GET['page'] ?? 1;
 
-        Response::json($data);
+        if (
+            filter_var($topic_id, FILTER_VALIDATE_INT) != true
+        ) {
+            Response::error();
+        }
     }
 
 

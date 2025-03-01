@@ -14,12 +14,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="quote" class="outline outline-gray-400 rounded-md bg-gray-200">
+  <div class="outline outline-gray-400 rounded-md bg-gray-200">
     <div class="py-2 px-2 flex items-center justify-center">
-      <p>"{{ quote.quote }}"</p>
+      <p v-if="quote">"{{ quote.quote }}"</p>
+      <p v-else>"Lorem, ipsum dolor sit amet consectetur"</p>
     </div>
-  </div>
-  <div v-else class="py-2 px-2 flex items-center justify-center">
-    <h1 class="text-gray-800">Loading...</h1>
   </div>
 </template>

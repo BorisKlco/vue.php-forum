@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import BoardForum from './board/BoardForum.vue'
 import BoardHead from './board/BoardHead.vue'
 import BoardNavigation from './board/BoardNavigation.vue'
+import BoardPlaceholder from './board/BoardPlaceholder.vue'
 
 let api = import.meta.env.VITE_API
 let board = ref()
@@ -18,7 +19,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <BoardNavigation v-if="board" :forum="board.navigation" />
+  <BoardNavigation :forum="board ? board.navigation : false" />
   <div v-if="board" class="outline outline-gray-400 overflow-hidden rounded-md">
     <table class="border-collapse table-auto w-full">
       <template v-for="category in board.categories" :key="category.name">
@@ -31,5 +32,7 @@ onMounted(async () => {
       </template>
     </table>
   </div>
-  <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
+  <div v-else class="outline outline-gray-400 overflow-hidden rounded-md">
+    <BoardPlaceholder />
+  </div>
 </template>

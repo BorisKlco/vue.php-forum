@@ -41,13 +41,9 @@ watch(() => router.currentRoute.value.query.page, fetchForum)
       <table class="border-collapse table-auto w-full">
         <ForumHead />
         <tbody>
-          <ForumTopic
-            v-for="topic in forum.post"
-            :key="topic.post_id"
-            :name="topic.title"
-            :link="topic.path"
-            :last="topic.lastEntry"
-          />
+          <template v-for="topic in forum.post" :key="topic.post_id">
+            <ForumTopic :topic="topic" />
+          </template>
         </tbody>
       </table>
       <Pagination v-show="forum.page.max > 1" :page="forum.page" />
