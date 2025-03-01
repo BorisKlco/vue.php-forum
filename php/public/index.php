@@ -20,4 +20,5 @@ $router->register('GET', '/api/quote', [Quote::class, 'random']);
 $router->register('GET', '/api/forum', [Board::class, 'forum']);
 $router->register('GET', '/api/topic', [Board::class, 'topic']);
 
+sleep(1);
 $router->resolve($method, $uri);

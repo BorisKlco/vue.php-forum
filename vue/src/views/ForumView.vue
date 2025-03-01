@@ -5,6 +5,7 @@ import BoardNavigation from '@/components/board/BoardNavigation.vue'
 import ForumHead from '@/components/forum/ForumHead.vue'
 import ForumTopic from '@/components/forum/ForumTopic.vue'
 import Pagination from '@/components/PaginationView.vue'
+import ForumPlaceholder from '@/components/placeholder/ForumPlaceholder.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -47,5 +48,7 @@ watch(() => router.currentRoute.value.query.page, fetchForum)
     </table>
     <Pagination v-show="forum.page.max > 1" :page="forum.page" />
   </div>
-  <h1 v-else class="text-center text-lg text-gray-600 py-24">Loading...</h1>
+  <div v-else class="outline outline-gray-400 overflow-hidden rounded-md mt-8">
+    <ForumPlaceholder />
+  </div>
 </template>

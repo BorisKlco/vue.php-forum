@@ -119,7 +119,7 @@ class Board
             $data['post'][] = [
                 'post_id' => $post['post_id'],
                 'title' => $post['post_title'],
-                'authod' => $post['author_name'],
+                'author' => $post['author_name'],
                 'replies' => $post['replies'],
                 'createdAt' => $post['createdAt'],
                 'path' => "{$this->formatName(($post['post_title']))}-t{$post['post_id']}",

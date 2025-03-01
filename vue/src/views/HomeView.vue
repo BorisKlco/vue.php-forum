@@ -1,11 +1,11 @@
 <script setup>
 import TheBoard from '@/components/TheBoard.vue'
-import TheWelcome from '../components/TheWelcome.vue'
+import TheQuote from '@/components/TheQuote.vue'
 import TheStats from '@/components/TheStats.vue'
 </script>
 
 <template>
-  <TheWelcome />
+  <TheQuote />
   <TheBoard />
   <TheStats />
 </template>

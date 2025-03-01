@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <thead>
     <tr class="bg-gray-300 text-xs text-gray-700">

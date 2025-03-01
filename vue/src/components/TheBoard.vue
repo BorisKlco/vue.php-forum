@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import BoardForum from './board/BoardForum.vue'
-import BoardHead from './board/BoardHead.vue'
-import BoardPlaceholder from './board/BoardPlaceholder.vue'
+import BoardForum from '@/components/board/BoardForum.vue'
+import BoardHead from '@/components/board/BoardHead.vue'
+import BoardPlaceholder from '@/components/placeholder/BoardPlaceholder.vue'
 
 let api = import.meta.env.VITE_API
 let board = ref()
