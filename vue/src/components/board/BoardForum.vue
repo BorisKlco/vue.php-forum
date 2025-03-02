@@ -25,6 +25,6 @@ defineProps({
     </th>
     <th class="border-r border-gray-400 hidden sm:table-cell">{{ forum.posts }}</th>
     <th class="border-r border-gray-400 hidden sm:table-cell">{{ forum.replies }}</th>
-    <th class="">Header 1</th>
+    <th class="">{{ forum.lastReply ?? 'Waiting for you!' }}</th>
   </tr>
 </template>

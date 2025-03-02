@@ -17,13 +17,14 @@ class Board
                 category.name as category, 
                 category.id as category_id, 
                 COUNT(DISTINCT post.id) as posts, 
-                COUNT(comment.id) as replies
+                COUNT(comment.id) as replies,
+                MAX(comment.createdAt) as last_comment
             FROM forum 
             JOIN category ON forum.category_id = category.id 
             LEFT JOIN post ON forum.id = post.forum_id 
             LEFT JOIN comment ON post.id = comment.post_id
             GROUP BY forum.id, category.id
-            ORDER BY category.id, forum.id;
+            ORDER BY category.id, forum.id
             ";
 
         $rows = Database::q($q)->fetchAll();
@@ -47,6 +48,7 @@ class Board
                 'posts' => $row['posts'],
                 'replies' => $row['replies'],
                 'link' => "{$this->formatName(($row['name']))}-forum{$row['forum_id']}",
+                'lastReply' => $row['last_comment'],
                 'lastEntry' => $index == count($rows) - 1
             ];
         }
